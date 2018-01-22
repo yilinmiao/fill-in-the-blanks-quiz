@@ -36,8 +36,6 @@ def choose_level():
             and user_input != "hard"):
         user_input = input("Select a difficulty level(type in "
                            + "easy/medium/hard): ")
-    game = ""
-    ans = []
     if (user_input == "easy"):
         game = easy
         ans = easy_ans
@@ -50,8 +48,18 @@ def choose_level():
     print(game)
     play_game(game.split(), parts_of_speech1, ans, 0, 0)
 
+# Checks if a word in parts_of_speech is a substring of the word passed in.
+
 
 def word_in_pos(word, parts_of_speech):
+    """
+    Returns the blank if it exists
+    Args:
+        word: splits game sample
+        parts_of_speech: designed blanks
+    Returns:
+        pos: if it exists
+    """
     for pos in parts_of_speech:
         if pos in word:
             return pos
@@ -62,19 +70,17 @@ def word_in_pos(word, parts_of_speech):
 
 
 def play_game(ml_string, parts_of_speech, ans, ans_index, index):
-    user_input = ""
     while index < len(ml_string):
         replacement = word_in_pos(ml_string[index], parts_of_speech)
         if replacement is None:
             index += 1
             continue
         else:
+            user_input = input("Type in answer for " + replacement + " ")
             while (user_input != ans[ans_index]):
+                print("try again! answer might be " + ans[ans_index])
                 user_input = input("Type in answer for " + replacement + " ")
-                if (user_input != ans[ans_index]):
-                    print("try again! answer might be " + ans[ans_index])
-                else:
-                    print("Congrats! Next")
+            print("Great! That's correct!")
             ml_string[index] = ans[ans_index]
             print (" ".join(ml_string))
             play_game(ml_string, parts_of_speech, ans, ans_index + 1,
