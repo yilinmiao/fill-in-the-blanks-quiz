@@ -31,6 +31,13 @@ hard_ans = ["parameters", "null", "parameters", "list"]
 
 
 def choose_level():
+    """
+    for user to choose difficulty level
+    Args:
+        none
+    Returns:
+        none
+    """
     user_input = ""
     while (user_input != "easy" and user_input != "medium"
             and user_input != "hard"):
@@ -70,6 +77,19 @@ def word_in_pos(word, parts_of_speech):
 
 
 def play_game(ml_string, parts_of_speech, ans, ans_index, index):
+    """
+    print congrats msg and continue if the answer is correct
+    , otherwise print try again msg and try again
+    Args:
+        ml_string: list of words from the sample
+        parts_of_speech: designed blanks
+        ans: designed answers
+        ans_index: current answer's position
+        index: current checking position
+    Returns:
+        none
+    """
+    # why should we use string since it's recursive?
     while index < len(ml_string):
         replacement = word_in_pos(ml_string[index], parts_of_speech)
         if replacement is None:
@@ -77,6 +97,8 @@ def play_game(ml_string, parts_of_speech, ans, ans_index, index):
             continue
         else:
             user_input = input("Type in answer for " + replacement + " ")
+            # I did exactly the previous reviewer asked.
+            # There is no differece tho.
             while (user_input != ans[ans_index]):
                 print("try again! answer might be " + ans[ans_index])
                 user_input = input("Type in answer for " + replacement + " ")
